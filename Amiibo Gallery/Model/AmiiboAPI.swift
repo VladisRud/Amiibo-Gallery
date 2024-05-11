@@ -7,6 +7,15 @@
 
 import Foundation
 
+struct AmiiboAPIGameSeries: Codable {
+    let amiibo: [GameSeries]
+}
+
+struct GameSeries: Codable {
+    let key: String
+    let name: String
+}
+
 enum Links {
     case gameSeriesURL
     
@@ -16,15 +25,6 @@ enum Links {
             return URL(string: "https://amiiboapi.com/api/gameseries/")!
         }
     }
-}
-
-struct AmiiboAPIGameSeries: Codable {
-    let amiibo: [GameSeries]
-}
-
-struct GameSeries: Codable {
-    let key: String
-    let name: String
 }
 
 
