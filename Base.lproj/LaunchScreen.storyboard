@@ -3,7 +3,7 @@
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +24,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.82697647809999997" green="0.1785596609" blue="0.145752728" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.82745098039215681" green="0.1803921568627451" blue="0.14509803921568626" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="JBX-Zh-LLC" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="JE6-IJ-toG"/>
                             <constraint firstItem="JBX-Zh-LLC" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="KIl-ty-AZd"/>

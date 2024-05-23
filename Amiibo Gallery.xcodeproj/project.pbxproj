@@ -13,6 +13,9 @@
 		586558C12BEF6F1C008D1F7A /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 586558C02BEF6F1C008D1F7A /* Base */; };
 		586558C92BEF7775008D1F7A /* AmiiboAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586558C82BEF7775008D1F7A /* AmiiboAPI.swift */; };
 		586558CB2BEFB78D008D1F7A /* GameSeriesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586558CA2BEFB78D008D1F7A /* GameSeriesTableView.swift */; };
+		58B713ED2BFC8F7E000DD530 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B713EC2BFC8F7E000DD530 /* NetworkManager.swift */; };
+		58B713F02BFCACE8000DD530 /* CharactersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B713EF2BFCACE8000DD530 /* CharactersTableViewController.swift */; };
+		58B713F22BFCADE7000DD530 /* AmiiboViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B713F12BFCADE7000DD530 /* AmiiboViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		586558C22BEF6F1C008D1F7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		586558C82BEF7775008D1F7A /* AmiiboAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmiiboAPI.swift; sourceTree = "<group>"; };
 		586558CA2BEFB78D008D1F7A /* GameSeriesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSeriesTableView.swift; sourceTree = "<group>"; };
+		58B713EC2BFC8F7E000DD530 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		58B713EF2BFCACE8000DD530 /* CharactersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersTableViewController.swift; sourceTree = "<group>"; };
+		58B713F12BFCADE7000DD530 /* AmiiboViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmiiboViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +47,8 @@
 			isa = PBXGroup;
 			children = (
 				586558B32BEF6F18008D1F7A /* Amiibo Gallery */,
+				586558BF2BEF6F1C008D1F7A /* LaunchScreen.storyboard */,
+				586558BD2BEF6F1C008D1F7A /* Assets.xcassets */,
 				586558B22BEF6F18008D1F7A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,9 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				586558CC2BEFF714008D1F7A /* Model */,
-				586558CD2BEFF71D008D1F7A /* Controllers */,
-				586558BF2BEF6F1C008D1F7A /* LaunchScreen.storyboard */,
-				586558BD2BEF6F1C008D1F7A /* Assets.xcassets */,
+				586558CD2BEFF71D008D1F7A /* ViewControllers */,
+				58B713EB2BFC8F6A000DD530 /* Services */,
 				586558CE2BEFF7EE008D1F7A /* App */,
 			);
 			path = "Amiibo Gallery";
@@ -73,12 +80,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		586558CD2BEFF71D008D1F7A /* Controllers */ = {
+		586558CD2BEFF71D008D1F7A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				586558CA2BEFB78D008D1F7A /* GameSeriesTableView.swift */,
+				58B713EF2BFCACE8000DD530 /* CharactersTableViewController.swift */,
+				58B713F12BFCADE7000DD530 /* AmiiboViewController.swift */,
 			);
-			path = Controllers;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		586558CE2BEFF7EE008D1F7A /* App */ = {
@@ -89,6 +98,14 @@
 				586558C22BEF6F1C008D1F7A /* Info.plist */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		58B713EB2BFC8F6A000DD530 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				58B713EC2BFC8F7E000DD530 /* NetworkManager.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,7 +179,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				586558C92BEF7775008D1F7A /* AmiiboAPI.swift in Sources */,
+				58B713F02BFCACE8000DD530 /* CharactersTableViewController.swift in Sources */,
+				58B713ED2BFC8F7E000DD530 /* NetworkManager.swift in Sources */,
 				586558CB2BEFB78D008D1F7A /* GameSeriesTableView.swift in Sources */,
+				58B713F22BFCADE7000DD530 /* AmiiboViewController.swift in Sources */,
 				586558B52BEF6F18008D1F7A /* AppDelegate.swift in Sources */,
 				586558B72BEF6F18008D1F7A /* SceneDelegate.swift in Sources */,
 			);

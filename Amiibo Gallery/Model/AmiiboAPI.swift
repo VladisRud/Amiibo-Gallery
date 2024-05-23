@@ -16,13 +16,35 @@ struct GameSeries: Codable {
     let name: String
 }
 
+struct AmiiboAPIListCharacters: Codable {
+    let amiibo: [charactersList]
+}
+
+struct charactersList: Codable {
+    let amiiboSeries: String
+    let character: String
+    let gameSeries: String
+    let head: String
+    let image: String
+    let name: String
+    let release: Release
+    let tail, type: String
+}
+
+struct Release: Codable {
+    let au, eu, jp, na: String?
+}
+
 enum Links {
     case gameSeriesURL
+    case characterList
     
     var url: URL {
         switch self {
         case .gameSeriesURL:
             return URL(string: "https://amiiboapi.com/api/gameseries/")!
+        case .characterList:
+            return URL(string: "https://amiiboapi.com/api/amiibo/?name&gameseries=")!
         }
     }
 }
