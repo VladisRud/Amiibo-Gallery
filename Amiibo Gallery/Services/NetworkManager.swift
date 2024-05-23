@@ -13,10 +13,10 @@ final class NetworkManager {
     
     private init() {}
     
-    func fetchImage(from url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
+    func fetchImage(from url: URL, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         DispatchQueue.global().async {
             guard let imageData = try? Data(contentsOf: url) else {
-                completion(.failure("no Data" as! Error))
+                completion(.failure(.noData))
                 return
             }
             DispatchQueue.main.async {
@@ -25,10 +25,10 @@ final class NetworkManager {
         }
     }
     
-    func fetch<T: Decodable>(_ type: T.Type, gameSeriesFrom url: URL, completion: @escaping (Result<T, Error>) -> Void) {
+    func fetch<T: Decodable>(_ type: T.Type, gameSeriesFrom url: URL, completion: @escaping (Result<T, NetworkError>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
-                completion(.failure("No Data" as! Error))
+                completion(.failure(.noData))
                 print(error?.localizedDescription ?? "No error description")
                 return
             }
@@ -41,16 +41,16 @@ final class NetworkManager {
                     completion(.success(dataModel))
                 }
             } catch {
-                completion(.failure(error.localizedDescription as! Error))
+                completion(.failure(.decodingError))
             }
         }.resume()
     }
     
-    func fetch<T: Decodable>(_ type: T.Type, gameSeriesName nameGM: String, gameSeriesFrom url: URL, completion: @escaping (Result<T, Error>) -> Void) {
+    func fetch<T: Decodable>(_ type: T.Type, gameSeriesName nameGM: String, gameSeriesFrom url: URL, completion: @escaping (Result<T, NetworkError>) -> Void) {
         let gameSerieURL = URL(string: url.absoluteString + nameGM)!
         URLSession.shared.dataTask(with: gameSerieURL) { data, _, error in
             guard let data else {
-                completion(.failure("No Data" as! Error))
+                completion(.failure(.noData))
                 print(error?.localizedDescription ?? "No error description")
                 return
             }
@@ -63,9 +63,16 @@ final class NetworkManager {
                     completion(.success(dataModel))
                 }
             } catch {
-                completion(.failure(error.localizedDescription as! Error))
+                completion(.failure(.decodingError))
             }
         }.resume()
     }
     
+}
+
+
+enum NetworkError: Error {
+    case invalidURL
+    case noData
+    case decodingError
 }
