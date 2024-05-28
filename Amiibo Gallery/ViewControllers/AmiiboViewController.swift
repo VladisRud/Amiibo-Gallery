@@ -17,7 +17,7 @@ final class AmiiboViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
         doConstrains()
-        fetchImage()
+        fetchImageAF()
     }
     
     //MARK: - UI Elements
@@ -47,12 +47,11 @@ private extension AmiiboViewController {
     }
     
     //MARK: - Network
-    func fetchImage() {
-        let url = URL(string:amiiboImageURL)!
-        NetworkManager.shared.fetchImage(from: url) { [weak self] result in
+    func fetchImageAF() {
+        NetworkManager.shared.fetchImageAF(from: amiiboImageURL) { [unowned self] result in
             switch result {
             case .success(let imageData):
-                self?.amiiboImage.image = UIImage(data: imageData)
+                self.amiiboImage.image = UIImage(data: imageData)
             case .failure(let error):
                 print(error.localizedDescription)
             }

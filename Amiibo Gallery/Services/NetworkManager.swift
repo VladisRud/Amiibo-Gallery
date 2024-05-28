@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 final class NetworkManager {
     
@@ -13,66 +14,46 @@ final class NetworkManager {
     
     private init() {}
     
-    func fetchImage(from url: URL, completion: @escaping (Result<Data, NetworkError>) -> Void) {
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: url) else {
-                completion(.failure(.noData))
-                return
-            }
-            DispatchQueue.main.async {
-                completion(.success(imageData))
-            }
-        }
-    }
-    
-    func fetch<T: Decodable>(_ type: T.Type, gameSeriesFrom url: URL, completion: @escaping (Result<T, NetworkError>) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data else {
-                completion(.failure(.noData))
-                print(error?.localizedDescription ?? "No error description")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let dataModel = try decoder.decode(T.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(.success(dataModel))
+    func fetchImageAF(from url: String, completion: @escaping (Result<Data, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseData { responseData in
+                switch responseData.result {
+                case .success(let data):
+                    completion(.success(data))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-            } catch {
-                completion(.failure(.decodingError))
             }
-        }.resume()
     }
     
-    func fetch<T: Decodable>(_ type: T.Type, gameSeriesName nameGM: String, gameSeriesFrom url: URL, completion: @escaping (Result<T, NetworkError>) -> Void) {
-        let gameSerieURL = URL(string: url.absoluteString + nameGM)!
-        URLSession.shared.dataTask(with: gameSerieURL) { data, _, error in
-            guard let data else {
-                completion(.failure(.noData))
-                print(error?.localizedDescription ?? "No error description")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let dataModel = try decoder.decode(T.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(.success(dataModel))
+    func fetchGameSeriesAF(from url: String, completion: @escaping (Result<[GameSeries], AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let jsonValue):
+                    let listGM = GameSeries.getGameSeries(from: jsonValue)
+                    completion(.success(listGM))
+                    print(type(of: listGM))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-            } catch {
-                completion(.failure(.decodingError))
             }
-        }.resume()
     }
     
-}
-
-
-enum NetworkError: Error {
-    case invalidURL
-    case noData
-    case decodingError
+    func fetchCharactersAF(from url: String, completion: @escaping (Result<[CharactersList], AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let jsonValue):
+                    let listCH = CharactersList.getCharactersList(from: jsonValue)
+                    completion(.success(listCH))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
 }

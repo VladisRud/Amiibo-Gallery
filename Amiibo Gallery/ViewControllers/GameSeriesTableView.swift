@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 final class GameSeriesTableView: UITableViewController {
     
@@ -17,7 +18,8 @@ final class GameSeriesTableView: UITableViewController {
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchGameSeries()
+        fetchGameSeriesAF()
+        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
     }
 
@@ -49,24 +51,23 @@ final class GameSeriesTableView: UITableViewController {
 
 //MARK: - Network
 private extension GameSeriesTableView {
-    func fetchGameSeries() {
-        networkManager.fetch(AmiiboAPIGameSeries.self, gameSeriesFrom: gameSeriesURL) { [weak self] result in
+    func fetchGameSeriesAF() {
+        networkManager.fetchGameSeriesAF(from: gameSeriesURL.absoluteString) { [unowned self] result in
             switch result {
-            case .success(let listGM):
-                self?.listGameSeries = self!.sortGameSeries(from: listGM)
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-            case .failure(_):
-                print("No Data")
+            case .success(let amiiboData):
+                self.listGameSeries = sortGameSeries(from: amiiboData)
+                print(type(of: self.listGameSeries))
+                tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
     
-    func sortGameSeries(from amiiboGM: AmiiboAPIGameSeries) -> [String] {
+    func sortGameSeries(from amiiboGM: [GameSeries]) -> [String] {
         var list: [String] = []
-        for GM in 0...amiiboGM.amiibo.count - 1 {
-            list.append(amiiboGM.amiibo[GM].name)
+        for GM in 0...amiiboGM.count - 1 {
+            list.append(amiiboGM[GM].name)
         }
         let returnList = Array(Set(list)).sorted()
         return returnList

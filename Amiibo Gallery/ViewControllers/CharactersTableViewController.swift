@@ -6,19 +6,21 @@
 //
 
 import UIKit
+import Alamofire
 
 final class CharactersTableViewController: UITableViewController {
     
     //MARK: - Properties
     var gameSerie = ""
-    private var listAmiiboCharacters: [charactersList] = []
+    private var listAmiiboCharacters: [CharactersList] = []
     private let characterListURL = Links.characterList.url
     private let networkManager = NetworkManager.shared
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchCharacters()
+        fetchAF()
+//        fetchDataAF()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "character")
         
     }
@@ -47,17 +49,17 @@ final class CharactersTableViewController: UITableViewController {
 
 private extension CharactersTableViewController {
     //MARK: - Network
-    func fetchCharacters() {
-        networkManager.fetch(AmiiboAPIListCharacters.self, gameSeriesName: gameSerie, gameSeriesFrom: characterListURL) { [weak self] result in
+    func fetchAF() {
+        networkManager.fetchCharactersAF(from: characterListURL.absoluteString + gameSerie) { [unowned self] result in
             switch result {
-            case .success(let listCharacters):
-                self?.listAmiiboCharacters = listCharacters.amiibo
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-            case .failure(_):
-                print("No Data")
+            case .success(let list):
+                self.listAmiiboCharacters = list
+                tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
+    
+    
 }
